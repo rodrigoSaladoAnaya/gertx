@@ -1,6 +1,6 @@
 class GertxGrailsPlugin {
     // the plugin version
-    def version = "0.1"
+    def version = "0.0.1"
     // the version or versions of Grails the plugin is designed for
     def grailsVersion = "2.3 > *"
     // resources that are excluded from plugin packaging
@@ -12,7 +12,7 @@ class GertxGrailsPlugin {
     def author = "Rodrigo Salado Anaya"
     def authorEmail = "rodrigo.salado.anaya@gmail.com"
     def description = '''\
-Gertx trae el porder de vertx a Grails
+Is a grails-plugin that allows use Vert.x
 '''
 
     // URL to the plugin's documentation
@@ -33,7 +33,7 @@ Gertx trae el porder de vertx a Grails
 //    def issueManagement = [ system: "JIRA", url: "http://jira.grails.org/browse/GPMYPLUGIN" ]
 
     // Online location of the plugin's browseable source code.
-//    def scm = [ url: "http://svn.codehaus.org/grails-plugins/" ]
+    def scm = [ url: "https://github.com/rodrigoSaladoAnaya/gertx" ]
 
     def doWithWebDescriptor = { xml ->
         // TODO Implement additions to web.xml (optional), this event occurs before
