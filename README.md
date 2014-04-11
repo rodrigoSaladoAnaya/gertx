@@ -19,19 +19,21 @@ https://github.com/rodrigoSaladoAnaya/gertx
 2.1: Init Vertx with 'gertxService.initVertx()' If you just want to use within the services
 2.2: And if you want to use external verticles help you install and uninstall add 'gertxService.runVerticleManager()'
 e.g.:
+
 class BootStrap {
     def gertxService
     def testVertxService
-
     def init = { servletContext ->
         gertxService.initVertx()
         gertxService.runVerticleManager()
         testVertxService.testVerticle()
     }
+}
 
 2.3: If you use the VerticleManager be accessed from a terminal with the command 'telnet localhost 5436' to manage verticles.
 2.3.1: To add a new verticle must create it in the folder grails-app/vertx/
 e.g.: If you want to create a EventBus Bridge called WebEventBus.groovy create a file create a file with that name in the folder grails-app/vertx/ and type something like:
+
 def server = vertx.createHttpServer()
 server.requestHandler { req ->
 }
@@ -41,7 +43,6 @@ vertx.createSockJSServer(server).bridge(
 server.listen(5540)
 
 2.3.2: Restart your grails app and I enjoy it.
-
 
 References:
 http://vertx.io/embedding_manual.html#embedding-the-VERTX-platform
