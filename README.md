@@ -20,15 +20,15 @@ To use gertx inside your grails application runtime you have to:
 2.2: And if you want to use external verticles help you install and uninstall add 'gertxService.runVerticleManager()'
 e.g.:
 <code>
-class BootStrap {
-    def gertxService
-    def testVertxService
-    def init = { servletContext ->
-        gertxService.initVertx()
-        gertxService.runVerticleManager()
-        testVertxService.testVerticle()
+    class BootStrap {
+        def gertxService
+        def testVertxService
+        def init = { servletContext ->
+            gertxService.initVertx()
+            gertxService.runVerticleManager()
+            testVertxService.testVerticle()
+        }
     }
-}
 </code>
 2.3: If you use the VerticleManager be accessed from a terminal with the command 'telnet localhost 5436' to manage verticles.
 2.3.1: To add a new verticle must create it in the folder grails-app/vertx/
@@ -38,7 +38,7 @@ def server = vertx.createHttpServer()
 server.requestHandler { req ->
 }
 vertx.createSockJSServer(server).bridge(
-        prefix: '/eventbus', [[:]], [[:]]
+    prefix: '/eventbus', [[:]], [[:]]
 )
 server.listen(5540)
 </code>
