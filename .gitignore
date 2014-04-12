@@ -1,0 +1,8 @@
+*.log
+/target
+grails-gertx-*.zip
+grails-gertx-*.zip.sha1
+plugin.xml
+web-app/WEB-INF
+*.iml
+.idea
