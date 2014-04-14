@@ -8,29 +8,35 @@ import org.vertx.java.core.json.JsonObject
 import org.vertx.java.platform.PlatformLocator
 
 class GertxService {
+
+    static transactional = false
+
     Vertx vertx
     EventBus eventBus
     def platformManager
     def grailsApplication
 
     void initVertx() {
-        if (!vertx) {
-            platformManager = PlatformLocator.factory.createPlatformManager()
-            vertx = platformManager.vertx()
-            eventBus = vertx.eventBus()
+        if (vertx) {
+            return
         }
+
+        platformManager = PlatformLocator.factory.createPlatformManager()
+        vertx = platformManager.vertx()
+        eventBus = vertx.eventBus()
     }
 
     void runVerticleManager() {
-        URL[] classpath = new URL[1];
         def verticleManagerFile = grailsApplication.mainContext.getResource("../grails-app/vertx/").file
         if (!verticleManagerFile.exists() || !verticleManagerFile.canRead()) {
             log.error "[vertx] No se pudo acceder al recurso '${verticleManagerFile}'"
             return
         }
+
         def verticleManagerUrl = verticleManagerFile.toURI().toURL()
 
-        classpath[0] = verticleManagerUrl;
+        URL[] classpath = new URL[1]
+        classpath[0] = verticleManagerUrl
 
         platformManager.deployVerticle(
                 "VerticleManager.groovy", [
@@ -41,7 +47,6 @@ class GertxService {
                 1,
                 null,
                 new Handler<AsyncResult<String>>() {
-                    @Override
                     void handle(AsyncResult<String> asyncResult) {
                         if (asyncResult.succeeded()) {
                             log.info "[vertx-manager] Se cargo el verticleManager."
@@ -50,6 +55,6 @@ class GertxService {
                         }
                     }
                 }
-        );
+        )
     }
 }

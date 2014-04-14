@@ -1,5 +1,5 @@
 ant.mkdir(dir: "${basedir}/grails-app/vertx")
-new File("${basedir}/grails-app/vertx/VerticleManager.groovy").text = '''\
+new File(basedir, "grails-app/vertx/VerticleManager.groovy").text = '''\
 import groovy.io.FileType
 
 /**
