@@ -30,9 +30,9 @@ class BootStrap {
 }
 ```
 
-    * If you use the VerticleManager be accessed from a terminal with the command 'telnet localhost 5436' to manage verticles.
-    * To add a new verticle must create it in the folder grails-app/vertx/
-    * e.g.: If you want to create a EventBus Bridge called WebEventBus.groovy create a file create a file with that name in the folder grails-app/vertx/ and type something like:
+  * If you use the VerticleManager be accessed from a terminal with the command 'telnet localhost 5436' to manage verticles.
+  * To add a new verticle must create it in the folder grails-app/vertx/
+  * e.g.: If you want to create a EventBus Bridge called WebEventBus.groovy create a file create a file with that name in the folder grails-app/vertx/ and type something like:
 
 ```groovy
 def server = vertx.createHttpServer()
