@@ -29,7 +29,7 @@ class GertxService {
     void runVerticleManager() {
         def verticleManagerFile = grailsApplication.mainContext.getResource("../grails-app/vertx/").file
         if (!verticleManagerFile.exists() || !verticleManagerFile.canRead()) {
-            log.error "[vertx] No se pudo acceder al recurso '${verticleManagerFile}'"
+            log.error "[vertx] Unable to access the resource '${verticleManagerFile}'"
             return
         }
 
@@ -49,9 +49,9 @@ class GertxService {
                 new Handler<AsyncResult<String>>() {
                     void handle(AsyncResult<String> asyncResult) {
                         if (asyncResult.succeeded()) {
-                            log.info "[vertx-manager] Se cargo el verticleManager."
+                            log.info "[vertx-manager] VerticleManager is the charge."
                         } else {
-                            log.error "[vertx-manager] verticleManager ${asyncResult.cause()}."
+                            log.error "[vertx-manager] Unable to charge the VerticleManager: ${asyncResult.cause()}."
                         }
                     }
                 }

@@ -16,9 +16,9 @@ class GertxUtilsService {
         def resultHandler = new AsyncResultHandler<Void>() {
             void handle(AsyncResult<Void> asyncResult) {
                 if (asyncResult.succeeded()) {
-                    log.info "[vertx] Se cargo el verticle ${address}."
+                    log.info "[vertx] ${address} is the charge."
                 } else {
-                    log.error "[vertx] ${asyncResult.cause()}."
+                    log.error "[vertx] Unable to charge ${address}: ${asyncResult.cause()}."
                 }
             }
         }
@@ -50,7 +50,7 @@ class GertxUtilsService {
                 if (result.succeeded()) {
                     bodyHandler(result.result())
                 } else {
-                    log.error "El verticle '${address}' no respondio: ${result.cause()}"
+                    log.error "The verticle '${address}' did not respond: ${result.cause()}"
                 }
             }
         }
