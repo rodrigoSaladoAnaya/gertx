@@ -11,7 +11,7 @@ Repository
 ----
 https://github.com/rodrigoSaladoAnaya/gertx
 
-Issue tracke
+Issue tracker
 ----
 https://github.com/rodrigoSaladoAnaya/gertx/issues
 
