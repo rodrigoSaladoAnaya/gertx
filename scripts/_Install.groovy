@@ -18,10 +18,10 @@ def verticlesNamesList = []
 log.info """
 
 ====================================
-Verticle Manager v0.1              #
-Port: ${port}                         #
-Start date: ${new Date().format("yyyy-MM-dd hh:mm:sss")}   #
-try: telnet localhost ${port}         #
+# Verticle Manager v0.1            #
+# Port: ${port}                       #
+# Start date: ${new Date().format("yyyy-MM-dd hh:mm:sss")} #
+# try: telnet localhost ${port}       #
 ====================================
 
 """
@@ -118,6 +118,37 @@ def uninstallCommand = { tail ->
     }
 }
 
+def loadAllVerticles = {
+   verticlesNamesList = []
+    new File(config.verticlePath).eachFileMatch(FileType.FILES, ~/^.*groovy$/) { file ->
+        if(!(file.name in ['VerticleManager.groovy'])) {
+            verticlesNamesList << file.name
+        }
+    } 
+}
+
+def showAllVertilces = {
+    verticlesNamesList.each { file ->
+        eb.send(socketLogAddress, '- ' + file)
+    }
+}
+
+def loadCommand = { tail ->
+    if (tail.size() > 0) {
+        def first = tail.first()[0]?.toLowerCase()
+        switch (first) {
+            case '*':
+                loadAllVerticles()
+                showAllVertilces()
+                log.info "[vertx] verticles available: ${verticlesNamesList}"
+                break
+            case '?':
+                help()
+                break
+        }
+    }
+}
+
 //TODO: Seek help to better explain the commands
 def help = {
     def txt = """
@@ -126,6 +157,7 @@ def help = {
 [show u | s u]      - Displays all uninstalled verticles.
 [show f | s f]      - Displays the files available to install.
 [show ? | s ?]      - Show this help.
+[load * | s *]      - Load all verticles.
 [install * | i *]   - Installs all verticles shown by the "show f" command.
 [install # | i #]   - Installs all verticles shown by the "show f" command passing an argument.
 [uninstall * | u *] - Uninstalls all verticles shown by the "show i" command.
@@ -138,7 +170,6 @@ def shortHelp = {
     def txt = '[show ? | s ?]      - Show help.'
     eb.send(socketLogAddress, txt)
 }
-
 
 def showCommand = { tail ->
     if (tail.size() > 0) {
@@ -163,9 +194,7 @@ def showCommand = { tail ->
                 }
                 break
             case 'f':
-                verticlesNamesList.each { file ->
-                    eb.send(socketLogAddress, '- ' + file)
-                }
+                showAllVertilces()
                 break
             case '?':
                 help()
@@ -186,6 +215,10 @@ def executeCommand = { input ->
         case 'show':
             showCommand(tail)
             break
+        case 'l':
+        case 'load':
+            loadCommand(tail)
+            break    
         case 'i':
         case 'install':
             installCommand(tail)
@@ -199,18 +232,8 @@ def executeCommand = { input ->
     }
 }
 
-/** Load all verticles */
-new File(config.verticlePath).eachFileMatch(FileType.FILES, ~/^.*groovy$/) { file ->
-    if(!(file.name in ['VerticleManager.groovy'])) {
-        verticlesNamesList << file.name
-    }
-}
-log.info "[vertx] verticles available: ${verticlesNamesList}"
-
-/** verticles installs all the time to raise the application */
-verticlesNamesList.sort { it }.each { v ->
-    installVerticle(v)
-}
+executeCommand 'load    *'
+executeCommand 'install *'
 
 /** The server */
 vertx.createNetServer().connectHandler { socket ->
