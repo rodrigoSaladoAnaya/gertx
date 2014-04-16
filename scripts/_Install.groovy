@@ -155,7 +155,8 @@ def help = {
 [show * | s *]      - Displays all installed and uninstalled verticles.
 [show i | s i]      - Displays all installed verticles.
 [show u | s u]      - Displays all uninstalled verticles.
-[show f | s f]      - Displays the files available to install.
+[show f | s f]      - Display the files available to install.
+[show p | s p]      - Display the verticle's path
 [show ? | s ?]      - Show this help.
 [load * | s *]      - Load all verticles.
 [install * | i *]   - Installs all verticles shown by the "show f" command.
@@ -195,6 +196,10 @@ def showCommand = { tail ->
                 break
             case 'f':
                 showAllVertilces()
+                break
+            case 'p':
+                def currentPath = new File(getClass().protectionDomain.codeSource.location.path).parent
+                eb.send(socketLogAddress, "[${currentPath}]".toString())
                 break
             case '?':
                 help()
