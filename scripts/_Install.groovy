@@ -91,7 +91,7 @@ def installCommand = { tail ->
     } else {
         tail.each { String input ->
             def verticlesToInstall = verticlesNamesList.findAll { String verticle ->
-                (verticle.toLowerCase().startsWith(input) && verticle.endsWith(".groovy"))
+                (verticle.toLowerCase().startsWith(input))
             }
             if (verticlesToInstall) {
                 verticlesToInstall.each { verticle ->
@@ -120,7 +120,10 @@ def uninstallCommand = { tail ->
 
 def loadAllVerticles = {
    verticlesNamesList = []
-    new File(config.verticlePath).eachFileMatch(FileType.FILES, ~/^.*groovy$/) { file ->
+    new File(config.verticlePath).eachFileMatch(
+        FileType.FILES, 
+        ~/^.*(groovy|js|rb|py|clj)$/
+    ) { file ->
         if(!(file.name in ['VerticleManager.groovy'])) {
             verticlesNamesList << file.name
         }
