@@ -9,6 +9,7 @@ import groovy.io.FileType
 def config = container.config
 def log = container.logger
 def port = config.environment.gertx.verticleManagerPort?:0
+def host = config.environment.gertx.verticleManagerHost?:'localhost'
 def eb = vertx.eventBus
 def socketLogAddress = 'write-log-to-socket'
 def verticlesInstalledMap = [:]
@@ -239,7 +240,7 @@ verticleManagerServer.connectHandler { socket ->
     socket.dataHandler { buffer ->
         executeCommand(buffer.toString())
     }
-}.listen(port, 'localhost') { asyncResult ->
+}.listen(port, host) { asyncResult ->
     if(asyncResult.isSucceeded()) {
         executeCommand 'load    *'
         executeCommand 'install *'
@@ -247,8 +248,9 @@ verticleManagerServer.connectHandler { socket ->
 ##        
 # Verticle Manager v0.1
 # Port: ${verticleManagerServer.port}
+# Host: ${verticleManagerServer.host}
 # Start date: ${new Date().format("yyyy-MM-dd hh:mm:sss")}
-# try: telnet localhost ${verticleManagerServer.port}
+# try: telnet ${host} ${verticleManagerServer.port}
 ##"""
     } else {
         log.error "[vertx] Fail to charge VerticleManager: ${asyncResult.getCause()}"
