@@ -8,23 +8,12 @@ import groovy.io.FileType
 
 def config = container.config
 def log = container.logger
-def port = 5436
+def port = config.environment.gertx.verticleManagerPort?:0
 def eb = vertx.eventBus
 def socketLogAddress = 'write-log-to-socket'
 def verticlesInstalledMap = [:]
 def verticlesUninstalledMap = [:]
 def verticlesNamesList = []
-
-log.info """
-
-====================================
-# Verticle Manager v0.1            #
-# Port: ${port}                       #
-# Start date: ${new Date().format("yyyy-MM-dd hh:mm:sss")} #
-# try: telnet localhost ${port}       #
-====================================
-
-"""
 
 def findVerticlesInstalledByName = { verticle ->
     def verticlesFound = verticlesInstalledMap.findAll { k, v ->
@@ -57,6 +46,7 @@ def installVerticle = { verticle ->
             log.info resp
             eb.send(socketLogAddress, resp.toString())
         } else {
+            asyncResult.cause().printStackTrace()
             resp = "[Install :: Err] ${verticle} :: ${asyncResult.cause()}"
             log.error resp
             eb.send(socketLogAddress, resp.toString())
@@ -240,11 +230,8 @@ def executeCommand = { input ->
     }
 }
 
-executeCommand 'load    *'
-executeCommand 'install *'
-
-/** The server */
-vertx.createNetServer().connectHandler { socket ->
+def verticleManagerServer = vertx.createNetServer()
+verticleManagerServer.connectHandler { socket ->
     eb.registerHandler(socketLogAddress) { msg ->
         socket.write '   ' + msg.body() + '\\n'
     }
@@ -252,5 +239,19 @@ vertx.createNetServer().connectHandler { socket ->
     socket.dataHandler { buffer ->
         executeCommand(buffer.toString())
     }
-}.listen port
+}.listen(port, 'localhost') { asyncResult ->
+    if(asyncResult.isSucceeded()) {
+        executeCommand 'load    *'
+        executeCommand 'install *'
+        log.info """
+##        
+# Verticle Manager v0.1
+# Port: ${verticleManagerServer.port}
+# Start date: ${new Date().format("yyyy-MM-dd hh:mm:sss")}
+# try: telnet localhost ${verticleManagerServer.port}
+##"""
+    } else {
+        log.error "[vertx] Fail to charge VerticleManager: ${asyncResult.getCause()}"
+    }
+}
 '''
