@@ -17,7 +17,8 @@ class GertxService {
     def grailsApplication
 
     void initVertx() {
-        if (vertx) {
+        if (vertx) { return }
+        if(grailsApplication.config?.gertx?.initVertx == false) {
             return
         }
 
@@ -27,6 +28,14 @@ class GertxService {
     }
 
     void runVerticleManager() {
+        if(!vertx) { 
+            log.warn "[vertx] Before use the VerticleManager use initVertx()"
+            return 
+        }
+        if(grailsApplication.config?.gertx?.runVerticleManager == false) {
+            return
+        }
+
         def verticleManagerFile = grailsApplication.mainContext.getResource("../grails-app/vertx/").file
         if (!verticleManagerFile.exists() || !verticleManagerFile.canRead()) {
             log.error "[vertx] Unable to access the resource '${verticleManagerFile}'"
