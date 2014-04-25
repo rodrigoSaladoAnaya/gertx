@@ -44,7 +44,7 @@ class GertxUtilsService {
         gertxService.eventBus.publish(address, args)
     }
 
-    void sendWithTimeout(String address, args, Closure bodyHandler, int timeout) {
+    void sendWithTimeout(String address, args, int timeout, Closure bodyHandler) {
         def messageHandler = new Handler<AsyncResult<Message<JsonObject>>>() {
             void handle(AsyncResult<Message<JsonObject>> result) {
                 if (result.succeeded()) {
