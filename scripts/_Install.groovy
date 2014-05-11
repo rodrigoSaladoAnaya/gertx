@@ -37,6 +37,10 @@ def findVerticleInstalledById = { id ->
     return verticleFound
 }
 
+def lastVerticleInstalled = [
+    verticle:null, id: null
+]
+
 def installVerticle = { verticle ->
     findVerticlesInstalledByName(verticle)
     container.deployVerticle(verticle, config.environment) { asyncResult ->
@@ -44,6 +48,8 @@ def installVerticle = { verticle ->
         if (asyncResult.succeeded()) {
             verticlesInstalledMap << ["${asyncResult.result()}": "${verticle} installed at ${new Date().format("yyyy-MM-dd hh:mm:sss")}"]
             resp = "[Install :: Ok] ${verticle} :: ${asyncResult.result()}"
+            lastVerticleInstalled.verticle = verticle.toString()
+            lastVerticleInstalled.id = asyncResult.result()
             log.info resp
             eb.send(socketLogAddress, resp.toString())
         } else {
@@ -153,6 +159,8 @@ def help = {
 [show p | s p]      - Display the verticle's path
 [show ? | s ?]      - Show this help.
 [load * | s *]      - Load all verticles.
+[showlast | sl]  - Show the last verticle uninstalled.
+[updatelast | ul]  - Update the last verticle uninstalled.
 [install * | i *]   - Installs all verticles shown by the "show f" command.
 [install # | i #]   - Installs all verticles shown by the "show f" command passing an argument.
 [uninstall * | u *] - Uninstalls all verticles shown by the "show i" command.
@@ -202,13 +210,22 @@ def showCommand = { tail ->
     }
 }
 
+def showUpdatelastCommand = {
+    eb.send(socketLogAddress, "${lastVerticleInstalled}".toString())
+}
+
+def updatelastCommand = {
+    uninstallCommand([lastVerticleInstalled.id])
+    installCommand([lastVerticleInstalled.verticle.toLowerCase()])
+}
+
 def executeCommand = { input ->
     def inputList = input.trim().replaceAll(' +', ' ').toLowerCase().split()
     if (!inputList) return null
 
     def head = inputList.head()
     def tail = inputList.tail()
-
+    
     switch (head) {
         case 's':
         case 'show':
@@ -225,6 +242,14 @@ def executeCommand = { input ->
         case 'u':
         case 'uninstall':
             uninstallCommand(tail)
+            break
+        case 'sl':
+        case 'showlast':
+            showUpdatelastCommand()
+            break
+        case 'ul':
+        case 'updatelast':
+            updatelastCommand()
             break
         default:
             shortHelp()
