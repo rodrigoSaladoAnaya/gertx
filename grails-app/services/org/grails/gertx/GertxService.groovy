@@ -30,7 +30,7 @@ class GertxService {
             return 
         }
         
-        def verticleManagerFile = grailsApplication.mainContext.getResource("../grails-app/vertx/").file
+        def verticleManagerFile = grailsApplication.mainContext.getResource("../grails-app/gertx/").file
         if (!verticleManagerFile.exists() || !verticleManagerFile.canRead()) {
             log.error "[vertx] Unable to access the resource '${verticleManagerFile}'"
             return

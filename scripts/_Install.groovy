@@ -14,3 +14,7 @@ ant.copy(
     todir:"${basedir}/grails-app/gertx", 
     overwrite:true
 )
+ant.copy(
+    file:"${pluginBasedir}/grails-app/gertx/EventBusBridge.groovy", 
+    todir:"${basedir}/grails-app/gertx"
+)
