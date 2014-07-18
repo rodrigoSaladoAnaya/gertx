@@ -52,7 +52,7 @@ class GertxService {
                 new Handler<AsyncResult<String>>() {
                     void handle(AsyncResult<String> asyncResult) {
                         if (asyncResult.succeeded()) {
-                            log.info "[vertx-manager] VerticleManager is the charge."
+                            log.info "[vertx-manager] VerticleManager is charged."
                         } else {
                             log.error "[vertx-manager] Unable to charge the VerticleManager: ${asyncResult.cause()}."
                         }
