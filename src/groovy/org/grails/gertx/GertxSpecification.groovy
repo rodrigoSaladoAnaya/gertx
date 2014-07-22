@@ -14,7 +14,7 @@ class GertxSpecification extends Specification {
     @Shared def platformManager
     @Shared def vertx
     @Shared EventBus eventBus
-    @Shared URL[] classpath = new URL[1]
+    @Shared URL[] classpath = new URL[2]
 
     @Override
     def setupSpec() {
@@ -23,14 +23,16 @@ class GertxSpecification extends Specification {
         eventBus = vertx.eventBus()
         def classPathUrl = new File('./grails-app/gertx').toURI().toURL()
         classpath[0] = classPathUrl
+        def classPathUrlTest = new File('./grails-app/gertx_test').toURI().toURL()
+        classpath[1] = classPathUrlTest
     }
 
     @Ignore
-    void deployVerticle(vertilceName) {
+    void deployVerticle(vertilceName, config = [:]) {
         def wait = true
         platformManager.deployVerticle(
                 vertilceName,
-                null,
+                config as JsonObject,
                 classpath,
                 1,
                 null,
