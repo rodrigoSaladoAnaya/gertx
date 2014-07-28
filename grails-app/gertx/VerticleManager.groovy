@@ -157,8 +157,8 @@ def help = {
 [show p | s p]      - Display the verticle's dir path
 [show ? | s ?]      - Show this help.
 [load * | l *]      - Load all verticles files in {show p}.
-[showlast | sl]     - Show the last verticle uninstalled.
-[updatelast | ul]   - Update the last verticle uninstalled.
+[showlast | sl]     - Show the last verticle installed.
+[updatelast | ul]   - Update the last verticle installed.
 [install * | i *]   - Installs all verticles shown by the {show f} command.
 [install # | i #]   - Installs all verticles shown by the {show f} command passing an argument.
 [uninstall * | u *] - Uninstalls all verticles shown by the {show i} command.
