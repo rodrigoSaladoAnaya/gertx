@@ -8,13 +8,13 @@ ant.copy(
         todir: "${basedir}/web-app/js/libs"
 )
 
-ant.mkdir(dir: "${basedir}/grails-app/gertx")
+ant.mkdir(dir: "${basedir}/web-app/gertx")
 ant.copy(
-        file: "${pluginBasedir}/grails-app/gertx/VerticleManager.groovy",
-        todir: "${basedir}/grails-app/gertx",
+        file: "${pluginBasedir}/web-app/gertx/VerticleManager.groovy",
+        todir: "${basedir}/web-app/gertx",
         overwrite: true
 )
 ant.copy(
-        file: "${pluginBasedir}/grails-app/gertx/EventBusBridge.groovy",
-        todir: "${basedir}/grails-app/gertx"
+        file: "${pluginBasedir}/web-app/gertx/EventBusBridge.groovy",
+        todir: "${basedir}/web-app/gertx"
 )
