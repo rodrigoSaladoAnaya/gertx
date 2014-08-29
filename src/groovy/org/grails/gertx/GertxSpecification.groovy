@@ -21,9 +21,9 @@ class GertxSpecification extends Specification {
         platformManager = PlatformLocator.factory.createPlatformManager()
         vertx = platformManager.vertx()
         eventBus = vertx.eventBus()
-        def classPathUrl = new File('./grails-app/gertx').toURI().toURL()
+        def classPathUrl = new File('./web-app/gertx').toURI().toURL()
         classpath[0] = classPathUrl
-        def classPathUrlTest = new File('./grails-app/gertx_test').toURI().toURL()
+        def classPathUrlTest = new File('./web-app/gertx_test').toURI().toURL()
         classpath[1] = classPathUrlTest
     }
 
