@@ -18,3 +18,8 @@ ant.copy(
         file: "${pluginBasedir}/web-app/gertx/EventBusBridge.groovy",
         todir: "${basedir}/web-app/gertx"
 )
+
+ant.copy(
+        file: "${pluginBasedir}/grails-app/conf/GertxUrlMappings.groovy",
+        todir: "${basedir}/grails-app/conf"
+)
