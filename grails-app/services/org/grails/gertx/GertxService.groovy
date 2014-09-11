@@ -44,7 +44,7 @@ class GertxService {
         platformManager.deployVerticle(
                 "VerticleManager.groovy", [
                 verticlePath: verticleManagerUrl.path,
-                environment: grailsApplication.config
+                environment: grailsApplication.config.gertx
         ] as JsonObject,
                 classpath,
                 1,

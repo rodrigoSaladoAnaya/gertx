@@ -6,8 +6,8 @@ import groovy.io.FileType
 
 def config = container.config
 def log = container.logger
-def port = config.environment.gertx.verticleManagerPort?:0
-def host = config.environment.gertx.verticleManagerHost?:'localhost'
+def port = config.verticleManagerPort?:0
+def host = config.verticleManagerHost?:'localhost'
 def eb = vertx.eventBus
 def socketLogAddress = 'write-log-to-socket'
 def verticlesInstalledMap = [:]
@@ -270,8 +270,8 @@ verticleManagerServer.connectHandler { socket ->
         log.info """
 ##        
 # Verticle Manager v0.1
-# Port: ${verticleManagerServer.port}${config.environment.gertx.verticleManagerPort?'':' -> gertx.verticleManagerPort = PORT_NUMBER'}
-# Host: ${verticleManagerServer.host}${config.environment.gertx.verticleManagerHost?'':' -> gertx.verticleManagerHost = HOST_STRING'}
+# Port: ${verticleManagerServer.port}${config.verticleManagerPort?'':' -> gertx.verticleManagerPort = PORT_NUMBER'}
+# Host: ${verticleManagerServer.host}${config.verticleManagerHost?'':' -> gertx.verticleManagerHost = HOST_STRING'}
 # Start date: ${new Date().format("yyyy-MM-dd hh:mm:sss")}
 # try: telnet ${host} ${verticleManagerServer.port}
 ##"""
