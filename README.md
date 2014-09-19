@@ -3,10 +3,6 @@ Gertx
 
 Allows use Vert.x in a Grails application
 
-Version
-----
-0.0.1
-
 Repository
 ----
 https://github.com/rodrigoSaladoAnaya/gertx
