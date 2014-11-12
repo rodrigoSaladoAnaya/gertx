@@ -6,10 +6,10 @@ import grails.util.Holders
 class AppContext {
 
     private def propertyMissing(String name) {
-        return grailsApplication(name)
+        return getGrailsBean(name)
     }
 
-    private def grailsApplication(beanName) {
+    private def getGrailsBean(beanName) {
         return Holders.grailsApplication.mainContext.getBean(
                 beanName
         )
