@@ -1,7 +1,7 @@
 import org.vertx.java.platform.PlatformLocator
 
 class GertxGrailsPlugin {
-    def version = "0.0.6"
+    def version = "0.0.7"
     def grailsVersion = "2.0 > *"
     def title = "Gertx Plugin"
     def description = 'A Grails plugin that integrates Vert.x'
