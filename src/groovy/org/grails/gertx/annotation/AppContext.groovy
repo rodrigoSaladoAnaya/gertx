@@ -1,4 +1,4 @@
-package org.grails.gertx
+package org.grails.gertx.annotation
 
 import grails.util.Holders
 
