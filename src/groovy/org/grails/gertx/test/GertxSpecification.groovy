@@ -1,4 +1,4 @@
-package org.grails.gertx
+package org.grails.gertx.test
 
 import org.junit.Ignore
 import org.vertx.java.core.AsyncResult

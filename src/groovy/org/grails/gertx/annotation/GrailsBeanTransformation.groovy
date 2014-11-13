@@ -32,7 +32,7 @@ public class GrailsBeanTransformation implements ASTTransformation {
 
     BlockStatement assignBean(String beanName) {
         def statements = """
-            org.grails.gertx.annotation.AppContext.instance.${beanName}
+            org.grails.gertx.utils.AppContext.instance.${beanName}
 		"""
         AstBuilder ab = new AstBuilder()
         List<ASTNode> res = ab.buildFromString(
