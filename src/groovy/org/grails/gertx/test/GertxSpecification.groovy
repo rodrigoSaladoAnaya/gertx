@@ -14,7 +14,8 @@ class GertxSpecification extends Specification {
     @Shared def platformManager
     @Shared def vertx
     @Shared EventBus eventBus
-    @Shared URL[] classpath = new URL[2]
+    @Shared URL[] classpath = new URL[1]
+    @Shared WAIT_TIME = 300
 
     @Override
     def setupSpec() {
@@ -23,8 +24,6 @@ class GertxSpecification extends Specification {
         eventBus = vertx.eventBus()
         def classPathUrl = new File('./web-app/gertx').toURI().toURL()
         classpath[0] = classPathUrl
-        def classPathUrlTest = new File('./web-app/gertx_test').toURI().toURL()
-        classpath[1] = classPathUrlTest
     }
 
     @Ignore
@@ -48,7 +47,7 @@ class GertxSpecification extends Specification {
                 }
         )
         while (wait) {
-            sleep(300)
+            sleep(WAIT_TIME)
         }
     }
 
@@ -68,7 +67,7 @@ class GertxSpecification extends Specification {
         })
 
         while (wait) {
-            sleep(300)
+            sleep(WAIT_TIME)
         }
         return body
     }
