@@ -12,8 +12,8 @@ grails.project.dependency.resolution = {
     }
 
     dependencies {
-        runtime 'io.vertx:vertx-core:2.1.4'
-        runtime 'io.vertx:vertx-platform:2.1.4'
+        runtime 'io.vertx:vertx-core:2.1.5'
+        runtime 'io.vertx:vertx-platform:2.1.5'
     }
 
     plugins {
