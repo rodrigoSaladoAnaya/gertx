@@ -38,9 +38,9 @@ class GertxSpecification extends Specification {
                 new Handler<AsyncResult<String>>() {
                     void handle(AsyncResult<String> asyncResult) {
                         if (asyncResult.succeeded()) {
-                            println "'${vertilceName}' is charged."
+                            println "[gertx] '${vertilceName}' is charged."
                         } else {
-                            println "Unable to charge '${vertilceName}': ${asyncResult.cause()}."
+                            println "[gertx] Unable to charge '${vertilceName}': ${asyncResult.cause()}."
                         }
                         wait = false
                     }
@@ -52,7 +52,7 @@ class GertxSpecification extends Specification {
     }
 
     @Ignore
-    def sendToVerticle(address, agrs, timeout=5000) {
+    def sendToVerticle(address, agrs=null, timeout=5000) {
         def wait = true
         def body = null
         eventBus.sendWithTimeout(address, agrs, timeout, new Handler<AsyncResult<Message<JsonObject>>>() {
